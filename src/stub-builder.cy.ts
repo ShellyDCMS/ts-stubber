@@ -41,48 +41,37 @@ describe("stub builder tests", () => {
       expect(mockMyInterface.asynFunc).to.be.calledWith(3);
     });
 
-    // it("should stub async function", async () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   mockMyInterface.asynFunc.returns(Promise.resolve(7));
-    //   expect(await mockMyInterface.asynFunc(3)).to.eq(7);
-    // });
+    it("should stub async function", async () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      mockMyInterface.asynFunc.returns(Promise.resolve(7));
+      expect(await mockMyInterface.asynFunc(3)).to.eq(7);
+    });
 
-    // it("should stub async function using overrides", async () => {
-    //   const stub = given.stub().returns(Promise.resolve(7));
-    //   const mockMyInterface = given.stubbedInterface<MyInterface>(
-    //     "MyInterface",
-    //     {
-    //       asynFunc: stub
-    //     }
-    //   );
-    //   expect(await mockMyInterface.asynFunc(3)).to.eq(7);
-    // });
+    it("should stub async function using overrides", async () => {
+      const stub = sinon.stub().returns(Promise.resolve(7));
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
+        asynFunc: stub
+      });
+      expect(await mockMyInterface.asynFunc(3)).to.eq(7);
+    });
 
-    // it("should stub async property function", async () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   await mockMyInterface.asyncPropertyFunc(3);
-    //   then(
-    //     get.assertableStub(mockMyInterface.asyncPropertyFunc)
-    //   ).shouldHaveBeenCalledWith(3);
-    // });
+    it("should stub async property function", async () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      await mockMyInterface.asyncPropertyFunc(3);
+      expect(mockMyInterface.asyncPropertyFunc).to.be.calledWith(3);
+    });
 
-    // it("should override class property Function", () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   mockMyInterface.propertyFunc.returns(7);
-    //   expect(mockMyInterface.propertyFunc(3)).to.eq(7);
-    // });
+    it("should override class property Function", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      mockMyInterface.propertyFunc.returns(7);
+      expect(mockMyInterface.propertyFunc(3)).to.eq(7);
+    });
 
-    // it("should stub interface property function", () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   mockMyInterface.propertyFunc(3);
-    //   then(
-    //     get.assertableStub(mockMyInterface.propertyFunc)
-    //   ).shouldHaveBeenCalledWith(3);
-    // });
+    it("should stub interface property function", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      mockMyInterface.propertyFunc(3);
+      expect(mockMyInterface.propertyFunc).to.be.calledWith(3);
+    });
 
     // it("should override interface property", () => {
     //   const mockMyInterface = given.stubbedInterface<MyInterface>(
