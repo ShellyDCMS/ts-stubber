@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "jsx": "react",
+    "importHelpers": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "target": "es2020",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": false,
+    "rootDir": "./src",
+    "types": ["node"],
+    "lib": ["es2018", "dom"],
+    "baseUrl": "./",
+    "module": "ESNext",
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src"],
+  "exclude": ["**/*.cy.*"]
+}

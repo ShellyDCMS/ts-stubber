@@ -1,0 +1,45 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Publish Package
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  checks: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+      - run: npx yarn install --frozen-lockfile
+      - run: npm run build
+      - run: npm run cy:run
+      - run: npm run generate-md-docs
+      - name: Generate html docs
+        run: npm run generate-docs
+
+      - name: Publish generated content to GitHub Pages
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
+        with:
+          dir: docs
+          branch: gh-pages
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Tests Report
+        uses: phoenix-actions/test-reporting@v8
+        id: test-report
+        if: always()
+        with:
+          name: Cypress Tests
+          path: ${{ github.workspace }}/cypress/results/json/mochawesome.json
+          reporter: mochawesome-json
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

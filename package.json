@@ -1,0 +1,89 @@
+{
+  "name": "@shellygo/ts-stubber",
+  "description": "Lazy Stubbing a TypeScript Class or Interface with any Mocking Framework for testing in Isolation",
+  "version": "1.0.0",
+  "author": "Shelly Goldblit",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:shellyDCMS/ts-stubber.git"
+  },
+  "homepage": "https://shellydcms.github.io/ts-stubber/modules.html",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "testing",
+    "typescript",
+    "stubbing",
+    "mocking",
+    "interface stub",
+    "interface mock",
+    "typescript stub",
+    "stub"
+  ],
+  "scripts": {
+    "build": "rollup --configPlugin @rollup/plugin-typescript --config rollup.config.ts ",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "generate-md-docs": "typedoc --includeVersion --plugin typedoc-plugin-markdown --plugin typedoc-plugin-merge-modules --options typedoc.md.json",
+    "generate-docs": "typedoc --includeVersion --plugin typedoc-plugin-merge-modules --options typedoc.html.json"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.2.5",
+    "gh-pages": "^5.0.0",
+    "mochawesome": "^7.1.3",
+    "rollup": "^4.9.6",
+    "rollup-plugin-dts-bundle-generator": "^1.4.0",
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typedoc-plugin-merge-modules": "^5.0.1",
+    "typescript": "^4.6.4",
+    "yarn": "^1.22.19",
+    "@types/chai-subset": "^1.3.3",
+    "@types/sinon": "^17.0.3",
+    "chai-subset": "^1.6.0",
+    "cypress": "^13.6.6",
+    "sinon": "^17.0.1"
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.spec.*"
+  ],
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=18.18.2"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}

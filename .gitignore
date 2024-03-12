@@ -1,0 +1,21 @@
+/.angular/cache
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+.vscode/*
+# compiled output
+/dist
+/tmp
+
+# dependencies
+/node_modules
+**/node_modules
+/coverage
+/node/
+/cypress/videos
+/cypress/screenshots
+/cypress/results
+/instrumented
+.nyc_output
+.external-resources
+.idea
+**/build
+docs
