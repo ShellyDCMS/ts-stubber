@@ -73,55 +73,43 @@ describe("stub builder tests", () => {
       expect(mockMyInterface.propertyFunc).to.be.calledWith(3);
     });
 
-    // it("should override interface property", () => {
-    //   const mockMyInterface = given.stubbedInterface<MyInterface>(
-    //     "MyInterface",
-    //     {
-    //       property: 5
-    //     }
-    //   );
-    //   expect(mockMyInterface.property).to.eq(5);
-    // });
+    it("should override interface property", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
+        property: 5
+      });
+      expect(mockMyInterface.property).to.eq(5);
+    });
 
-    // it("should override interface getter", () => {
-    //   const mockMyInterface = given.stubbedInterface<MyInterface>(
-    //     "MyInterface",
-    //     {
-    //       getter: 5
-    //     }
-    //   );
-    //   expect(mockMyInterface.getter).to.eq(5);
-    // });
+    it("should override interface getter", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
+        getter: 5
+      });
+      expect(mockMyInterface.getter).to.eq(5);
+    });
 
-    // it("should stub interface setter with override", () => {
-    //   const mockMyInterface = given.stubbedInterface<MyInterface>(
-    //     "MyInterface",
-    //     {
-    //       property: 8
-    //     }
-    //   );
-    //   expect(mockMyInterface.property).to.eq(8);
-    // });
+    it("should stub interface setter with override", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
+        property: 8
+      });
+      expect(mockMyInterface.property).to.eq(8);
+    });
 
-    // it("should allow setter calls", () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   expect((mockMyInterface.setter = 5)).not.to.throw;
-    // });
+    it("should allow setter calls", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      expect((mockMyInterface.setter = 5)).not.to.throw;
+    });
 
-    // it("should allow setting properties", () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   mockMyInterface.property = 5;
-    //   expect(mockMyInterface.property).to.eq(5);
-    // });
+    it("should allow setting properties", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      mockMyInterface.property = 5;
+      expect(mockMyInterface.property).to.eq(5);
+    });
 
-    // it("should stub interface function return value", () => {
-    //   const mockMyInterface =
-    //     given.stubbedInterface<MyInterface>("MyInterface");
-    //   mockMyInterface.func.returns(7);
-    //   expect(mockMyInterface.func(5, "whatever")).to.eq(7);
-    // });
+    it("should stub interface function return value", () => {
+      const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
+      mockMyInterface.func.returns(7);
+      expect(mockMyInterface.func(5, "whatever")).to.eq(7);
+    });
   });
 
   describe("stubbing class", () => {
