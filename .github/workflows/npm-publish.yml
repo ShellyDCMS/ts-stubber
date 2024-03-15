@@ -24,9 +24,6 @@ jobs:
       - run: npm run generate-md-docs
       - name: Generate html docs
         run: npm run generate-docs
-
-      - name: Publish generated content to GitHub Pages
-        run: npm run deploy
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
@@ -35,7 +32,6 @@ jobs:
           name: Cypress Tests
           path: ${{ github.workspace }}/cypress/results/json/mochawesome.json
           reporter: mochawesome-json
-
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
