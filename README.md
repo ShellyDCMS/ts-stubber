@@ -10,7 +10,7 @@ A generic stubbed instance creator to lazy stub any interface/class, without cal
 
 ## Usage
 
-This library provides an API to create a stubbed instance of a class or interface, including property functions, allowing overrides and excluded methods
+This library provides an API to create a stubbed instance of a class or interface, including property functions, allowing overrides and excluded methods.
 
 ```ts
 class MyClass {
