@@ -33,7 +33,32 @@ export const defaultExcludedMethods: string[] = [
  *
  * @example
  * ```ts
+ * class MyClass {
+ *    constructor(input: number) {
+ *      throw new Error("Should not be called");
+ *    }
+ *    func(input: number, text: string) {
+ *      console.log(text);
+ *      return input;
+ *    }
+ *    property: number = 3;
+ *    optionalProperty?: number;
+ *    get getter(): number {
+ *      return this.property;
+ *    }
+ *    set setter(value: number) {
+ *      throw new Error("Should not be called");
+ *    }
+ * }
  *
+ * const stubbedInstanceCreator = StubbedInstanceCreator<
+ *      MyClass,
+ *      SinonStub
+ *    >(() => sinon.stub())
+ *
+ * const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
+ *       sinon.stub()
+ *     ).createStubbedInstance()
  * ```
  */
 export const StubbedInstanceCreator = <T, StubT>(
