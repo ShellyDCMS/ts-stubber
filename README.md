@@ -12,6 +12,34 @@ A generic stubbed instance creator to lazy stub any interface/class, without cal
 
 This library provides an API to create a stubbed instance of a class or interface, including property functions, allowing overrides and excluded methods
 
+```ts
+class MyClass {
+  constructor(input: number) {
+    throw new Error("Should not be called");
+  }
+  func(input: number, text: string) {
+    console.log(text);
+    return input;
+  }
+  property: number = 3;
+  optionalProperty?: number;
+  get getter(): number {
+    return this.property;
+  }
+  set setter(value: number) {
+    throw new Error("Should not be called");
+  }
+}
+
+const stubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(() =>
+  sinon.stub()
+);
+
+const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
+  sinon.stub()
+).createStubbedInstance();
+```
+
 `npm i -D @shellygo/ts-stubber`
 
 or
