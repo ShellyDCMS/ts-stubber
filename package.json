@@ -28,7 +28,8 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "generate-md-docs": "typedoc --includeVersion --plugin typedoc-plugin-markdown --plugin typedoc-plugin-merge-modules --options typedoc.md.json",
-    "generate-docs": "typedoc --includeVersion --plugin typedoc-plugin-merge-modules --options typedoc.html.json"
+    "generate-docs": "typedoc --includeVersion --plugin typedoc-plugin-merge-modules --options typedoc.html.json",
+    "deploy": "gh-pages -d docs"
   },
   "dependencies": {},
   "devDependencies": {
