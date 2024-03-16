@@ -153,62 +153,66 @@ describe("Jest stub builder tests with Jest Mocks", () => {
     describe("Given inherited class", () => {
       const stubbedInstanceCreator = StubbedInstanceCreator<
         MyInheritedClass,
-        SinonStub
-      >(() => sinon.stub());
+        jest.Mock
+      >(() => jest.fn());
 
       it("should assert stub async function calls", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.asynFunc.resolves(returnValue);
+        mockMyInheritedClass.asynFunc.mockResolvedValue(returnValue);
         await mockMyInheritedClass.asynFunc(input);
-        expect(mockMyInheritedClass.asynFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asynFunc).toHaveBeenCalledWith(input);
       });
 
       it("should assert stub async function calls using overrides", async () => {
-        const stub = sinon.stub().returns(Promise.resolve(7));
+        const stub = jest.fn().mockReturnValue(Promise.resolve(returnValue));
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance({
             asynFunc: stub
           });
         await mockMyInheritedClass.asynFunc(input);
-        expect(mockMyInheritedClass.asynFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asynFunc).toHaveBeenCalledWith(input);
       });
 
       it("should stub async function", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.asynFunc.returns(Promise.resolve(returnValue));
-        expect(await mockMyInheritedClass.asynFunc(3)).to.eq(returnValue);
+        mockMyInheritedClass.asynFunc.mockReturnValue(
+          Promise.resolve(returnValue)
+        );
+        expect(await mockMyInheritedClass.asynFunc(input)).toEqual(returnValue);
       });
 
       it("should stub async function using overrides", async () => {
-        const stub = sinon.stub().returns(Promise.resolve(returnValue));
+        const stub = jest.fn().mockReturnValue(Promise.resolve(returnValue));
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance({
             asynFunc: stub
           });
-        expect(await mockMyInheritedClass.asynFunc(input)).to.eq(returnValue);
+        expect(await mockMyInheritedClass.asynFunc(input)).toEqual(returnValue);
       });
 
       it("should stub async property function", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         await mockMyInheritedClass.asyncPropertyFunc(input);
-        expect(mockMyInheritedClass.asyncPropertyFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asyncPropertyFunc).toHaveBeenCalledWith(
+          input
+        );
       });
 
       it("should override class property Function", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.propertyFunc.returns(returnValue);
-        expect(mockMyInheritedClass.propertyFunc(input)).to.eq(returnValue);
+        mockMyInheritedClass.propertyFunc.mockReturnValue(returnValue);
+        expect(mockMyInheritedClass.propertyFunc(input)).toEqual(returnValue);
       });
 
       it("should stub class property function", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.propertyFunc(input);
-        expect(mockMyInheritedClass.propertyFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.propertyFunc).toHaveBeenCalledWith(input);
       });
 
       it("should override class property", () => {
@@ -216,7 +220,7 @@ describe("Jest stub builder tests with Jest Mocks", () => {
           stubbedInstanceCreator.createStubbedInstance({
             property: propertyValue
           });
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should override class getter", () => {
@@ -224,7 +228,7 @@ describe("Jest stub builder tests with Jest Mocks", () => {
           stubbedInstanceCreator.createStubbedInstance({
             getter: propertyValue
           });
-        expect(mockMyInheritedClass.getter).to.eq(propertyValue);
+        expect(mockMyInheritedClass.getter).toEqual(propertyValue);
       });
 
       it("should stub class setter with override", () => {
@@ -232,20 +236,20 @@ describe("Jest stub builder tests with Jest Mocks", () => {
           stubbedInstanceCreator.createStubbedInstance({
             property: propertyValue
           });
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should assert stub class setter calls", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        expect((mockMyInheritedClass.setter = propertyValue)).not.to.throw;
+        expect((mockMyInheritedClass.setter = propertyValue)).not.toThrow;
       });
 
       it("should allow setting properties", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.property = propertyValue;
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should allow setting optional properties", () => {
@@ -253,9 +257,11 @@ describe("Jest stub builder tests with Jest Mocks", () => {
           stubbedInstanceCreator.createStubbedInstance({
             optionalProperty: propertyValue
           });
-        expect(mockMyInheritedClass.optionalProperty).to.eq(propertyValue);
+        expect(mockMyInheritedClass.optionalProperty).toEqual(propertyValue);
         mockMyInheritedClass.optionalProperty = propertyValue + 1;
-        expect(mockMyInheritedClass.optionalProperty).to.eq(propertyValue + 1);
+        expect(mockMyInheritedClass.optionalProperty).toEqual(
+          propertyValue + 1
+        );
       });
 
       it("should stub class", () => {
@@ -263,14 +269,16 @@ describe("Jest stub builder tests with Jest Mocks", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.func(input, str);
-        expect(mockMyInheritedClass.func).to.be.calledWith(input, str);
+        expect(mockMyInheritedClass.func).toHaveBeenCalledWith(input, str);
       });
 
       it("should stub class function return value", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.func.returns(returnValue);
-        expect(mockMyInheritedClass.func(input, "whatever")).to.eq(returnValue);
+        mockMyInheritedClass.func.mockReturnValue(returnValue);
+        expect(mockMyInheritedClass.func(input, "whatever")).toEqual(
+          returnValue
+        );
       });
     });
 
