@@ -1,7 +1,8 @@
+import { describe, expect } from "@jest/globals";
 import { Chance } from "chance";
-import sinon, { SinonStub } from "sinon";
 import { StubbedInstanceCreator } from "./stub-builder";
-describe("Cypress stub builder tests with Sinon Stubs", () => {
+
+describe("Jest stub builder tests with Jest Mocks", () => {
   const chance = new Chance();
   const input = chance.integer();
   const returnValue = chance.integer();
@@ -20,100 +21,100 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
 
     const stubbedInstanceCreator = StubbedInstanceCreator<
       MyInterface,
-      SinonStub
-    >(() => sinon.stub());
+      jest.Mock
+    >(() => jest.fn());
 
     it("should stub interface", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
       mockMyInterface.func(input, "whatever");
-      expect(mockMyInterface.func).to.be.calledWith(input, "whatever");
+      expect(mockMyInterface.func).toHaveBeenCalledWith(input, "whatever");
     });
 
     it("should assert stub async function calls", async () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
 
-      mockMyInterface.asynFunc.returns(Promise.resolve(returnValue));
+      mockMyInterface.asynFunc.mockReturnValue(Promise.resolve(returnValue));
       await mockMyInterface.asynFunc(input);
-      expect(mockMyInterface.asynFunc).to.be.calledWith(input);
+      expect(mockMyInterface.asynFunc).toHaveBeenCalledWith(input);
     });
 
     it("should assert stub async function calls using overrides", async () => {
-      const stub = sinon.stub().returns(Promise.resolve(returnValue));
+      const stub = jest.fn().mockReturnValue(Promise.resolve(returnValue));
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
         asynFunc: stub
       });
       await mockMyInterface.asynFunc(input);
-      expect(mockMyInterface.asynFunc).to.be.calledWith(input);
+      expect(mockMyInterface.asynFunc).toHaveBeenCalledWith(input);
     });
 
     it("should stub async function", async () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
-      mockMyInterface.asynFunc.returns(Promise.resolve(returnValue));
-      expect(await mockMyInterface.asynFunc(input)).to.eq(returnValue);
+      mockMyInterface.asynFunc.mockResolvedValue(returnValue);
+      expect(await mockMyInterface.asynFunc(input)).toEqual(returnValue);
     });
 
     it("should stub async function using overrides", async () => {
-      const stub = sinon.stub().returns(Promise.resolve(returnValue));
+      const stub = jest.fn().mockResolvedValue(returnValue);
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
         asynFunc: stub
       });
-      expect(await mockMyInterface.asynFunc(input)).to.eq(returnValue);
+      expect(await mockMyInterface.asynFunc(input)).toEqual(returnValue);
     });
 
     it("should stub async property function", async () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
       await mockMyInterface.asyncPropertyFunc(input);
-      expect(mockMyInterface.asyncPropertyFunc).to.be.calledWith(input);
+      expect(mockMyInterface.asyncPropertyFunc).toHaveBeenCalledWith(input);
     });
 
     it("should override class property Function", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
-      mockMyInterface.propertyFunc.returns(returnValue);
-      expect(mockMyInterface.propertyFunc(input)).to.eq(returnValue);
+      mockMyInterface.propertyFunc.mockReturnValue(returnValue);
+      expect(mockMyInterface.propertyFunc(input)).toEqual(returnValue);
     });
 
     it("should stub interface property function", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
       mockMyInterface.propertyFunc(input);
-      expect(mockMyInterface.propertyFunc).to.be.calledWith(input);
+      expect(mockMyInterface.propertyFunc).toHaveBeenCalledWith(input);
     });
 
     it("should override interface property", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
         property: propertyValue
       });
-      expect(mockMyInterface.property).to.eq(propertyValue);
+      expect(mockMyInterface.property).toEqual(propertyValue);
     });
 
     it("should override interface getter", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
         getter: propertyValue
       });
-      expect(mockMyInterface.getter).to.eq(propertyValue);
+      expect(mockMyInterface.getter).toEqual(propertyValue);
     });
 
     it("should stub interface setter with override", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance({
         property: propertyValue
       });
-      expect(mockMyInterface.property).to.eq(propertyValue);
+      expect(mockMyInterface.property).toEqual(propertyValue);
     });
 
     it("should allow setter calls", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
-      expect((mockMyInterface.setter = input)).not.to.throw;
+      expect((mockMyInterface.setter = input)).not.toThrow;
     });
 
     it("should allow setting properties", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
       mockMyInterface.property = propertyValue;
-      expect(mockMyInterface.property).to.eq(propertyValue);
+      expect(mockMyInterface.property).toEqual(propertyValue);
     });
 
     it("should stub interface function return value", () => {
       const mockMyInterface = stubbedInstanceCreator.createStubbedInstance();
-      mockMyInterface.func.returns(returnValue);
-      expect(mockMyInterface.func(input, "whatever")).to.eq(returnValue);
+      mockMyInterface.func.mockReturnValue(returnValue);
+      expect(mockMyInterface.func(input, "whatever")).toEqual(returnValue);
     });
   });
 
@@ -152,62 +153,66 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
     describe("Given inherited class", () => {
       const stubbedInstanceCreator = StubbedInstanceCreator<
         MyInheritedClass,
-        SinonStub
-      >(() => sinon.stub());
+        jest.Mock
+      >(() => jest.fn());
 
       it("should assert stub async function calls", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.asynFunc.resolves(returnValue);
+        mockMyInheritedClass.asynFunc.mockResolvedValue(returnValue);
         await mockMyInheritedClass.asynFunc(input);
-        expect(mockMyInheritedClass.asynFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asynFunc).toHaveBeenCalledWith(input);
       });
 
       it("should assert stub async function calls using overrides", async () => {
-        const stub = sinon.stub().returns(Promise.resolve(returnValue));
+        const stub = jest.fn().mockReturnValue(Promise.resolve(returnValue));
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance({
             asynFunc: stub
           });
         await mockMyInheritedClass.asynFunc(input);
-        expect(mockMyInheritedClass.asynFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asynFunc).toHaveBeenCalledWith(input);
       });
 
       it("should stub async function", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.asynFunc.returns(Promise.resolve(returnValue));
-        expect(await mockMyInheritedClass.asynFunc(input)).to.eq(returnValue);
+        mockMyInheritedClass.asynFunc.mockReturnValue(
+          Promise.resolve(returnValue)
+        );
+        expect(await mockMyInheritedClass.asynFunc(input)).toEqual(returnValue);
       });
 
       it("should stub async function using overrides", async () => {
-        const stub = sinon.stub().returns(Promise.resolve(returnValue));
+        const stub = jest.fn().mockReturnValue(Promise.resolve(returnValue));
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance({
             asynFunc: stub
           });
-        expect(await mockMyInheritedClass.asynFunc(input)).to.eq(returnValue);
+        expect(await mockMyInheritedClass.asynFunc(input)).toEqual(returnValue);
       });
 
       it("should stub async property function", async () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         await mockMyInheritedClass.asyncPropertyFunc(input);
-        expect(mockMyInheritedClass.asyncPropertyFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.asyncPropertyFunc).toHaveBeenCalledWith(
+          input
+        );
       });
 
       it("should override class property Function", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.propertyFunc.returns(returnValue);
-        expect(mockMyInheritedClass.propertyFunc(input)).to.eq(returnValue);
+        mockMyInheritedClass.propertyFunc.mockReturnValue(returnValue);
+        expect(mockMyInheritedClass.propertyFunc(input)).toEqual(returnValue);
       });
 
       it("should stub class property function", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.propertyFunc(input);
-        expect(mockMyInheritedClass.propertyFunc).to.be.calledWith(input);
+        expect(mockMyInheritedClass.propertyFunc).toHaveBeenCalledWith(input);
       });
 
       it("should override class property", () => {
@@ -215,7 +220,7 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
           stubbedInstanceCreator.createStubbedInstance({
             property: propertyValue
           });
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should override class getter", () => {
@@ -223,7 +228,7 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
           stubbedInstanceCreator.createStubbedInstance({
             getter: propertyValue
           });
-        expect(mockMyInheritedClass.getter).to.eq(propertyValue);
+        expect(mockMyInheritedClass.getter).toEqual(propertyValue);
       });
 
       it("should stub class setter with override", () => {
@@ -231,20 +236,20 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
           stubbedInstanceCreator.createStubbedInstance({
             property: propertyValue
           });
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should assert stub class setter calls", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        expect((mockMyInheritedClass.setter = propertyValue)).not.to.throw;
+        expect((mockMyInheritedClass.setter = propertyValue)).not.toThrow;
       });
 
       it("should allow setting properties", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.property = propertyValue;
-        expect(mockMyInheritedClass.property).to.eq(propertyValue);
+        expect(mockMyInheritedClass.property).toEqual(propertyValue);
       });
 
       it("should allow setting optional properties", () => {
@@ -252,9 +257,11 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
           stubbedInstanceCreator.createStubbedInstance({
             optionalProperty: propertyValue
           });
-        expect(mockMyInheritedClass.optionalProperty).to.eq(propertyValue);
+        expect(mockMyInheritedClass.optionalProperty).toEqual(propertyValue);
         mockMyInheritedClass.optionalProperty = propertyValue + 1;
-        expect(mockMyInheritedClass.optionalProperty).to.eq(propertyValue + 1);
+        expect(mockMyInheritedClass.optionalProperty).toEqual(
+          propertyValue + 1
+        );
       });
 
       it("should stub class", () => {
@@ -262,97 +269,99 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
         mockMyInheritedClass.func(input, str);
-        expect(mockMyInheritedClass.func).to.be.calledWith(input, str);
+        expect(mockMyInheritedClass.func).toHaveBeenCalledWith(input, str);
       });
 
       it("should stub class function return value", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance();
-        mockMyInheritedClass.func.returns(returnValue);
-        expect(mockMyInheritedClass.func(input, "whatever")).to.eq(returnValue);
+        mockMyInheritedClass.func.mockReturnValue(returnValue);
+        expect(mockMyInheritedClass.func(input, "whatever")).toEqual(
+          returnValue
+        );
       });
     });
 
     it("should stub class function", () => {
-      const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
-        sinon.stub()
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
       ).createStubbedInstance();
-      mockMyClass.func.returns(returnValue);
-      expect(mockMyClass.func(input)).to.eq(returnValue);
+      mockMyClass.func.mockReturnValue(returnValue);
+      expect(mockMyClass.func(5)).toEqual(returnValue);
     });
 
     it("should stub property class function", () => {
-      const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
-        sinon.stub()
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
       ).createStubbedInstance();
-      mockMyClass.propertyFunc.returns(returnValue);
-      expect(mockMyClass.propertyFunc(input)).to.eq(returnValue);
+      mockMyClass.propertyFunc.mockReturnValue(returnValue);
+      expect(mockMyClass.propertyFunc(5)).toEqual(returnValue);
     });
 
-    const stubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
-      () => sinon.stub()
+    const stubbedInstanceCreator = StubbedInstanceCreator<MyClass, jest.Mock>(
+      () => jest.fn()
     );
 
     it("should assert stub async function calls", async () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      mockMyClass.asynFunc.returns(Promise.resolve(returnValue));
+      mockMyClass.asynFunc.mockResolvedValue(returnValue);
       await mockMyClass.asynFunc(input);
-      expect(mockMyClass.asynFunc).to.be.calledWith(input);
+      expect(mockMyClass.asynFunc).toHaveBeenCalledWith(input);
     });
 
     it("should assert stub async function calls using overrides", async () => {
-      const stub = sinon.stub().returns(Promise.resolve(returnValue));
+      const stub = jest.fn().mockResolvedValue(returnValue);
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
         asynFunc: stub
       });
       await mockMyClass.asynFunc(input);
-      expect(mockMyClass.asynFunc).to.be.calledWith(input);
+      expect(mockMyClass.asynFunc).toHaveBeenCalledWith(input);
     });
 
     it("should stub async function", async () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      mockMyClass.asynFunc.returns(Promise.resolve(returnValue));
-      expect(await mockMyClass.asynFunc(input)).to.eq(returnValue);
+      mockMyClass.asynFunc.mockResolvedValue(returnValue);
+      expect(await mockMyClass.asynFunc(input)).toEqual(returnValue);
     });
 
     it("should stub async function using overrides", async () => {
-      const stub = sinon.stub().returns(Promise.resolve(returnValue));
+      const stub = jest.fn().mockResolvedValue(returnValue);
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
         asynFunc: stub
       });
-      expect(await mockMyClass.asynFunc(input)).to.eq(returnValue);
+      expect(await mockMyClass.asynFunc(input)).toEqual(returnValue);
     });
 
     it("should stub async property function", async () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
       await mockMyClass.asyncPropertyFunc(input);
-      expect(mockMyClass.asyncPropertyFunc).to.be.calledWith(input);
+      expect(mockMyClass.asyncPropertyFunc).toHaveBeenCalledWith(input);
     });
 
     it("should override class property Function", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      mockMyClass.propertyFunc.returns(returnValue);
-      expect(mockMyClass.propertyFunc(input)).to.eq(returnValue);
+      mockMyClass.propertyFunc.mockReturnValue(returnValue);
+      expect(mockMyClass.propertyFunc(input)).toEqual(returnValue);
     });
 
     it("should stub class property function", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
       mockMyClass.propertyFunc(input);
-      expect(mockMyClass.propertyFunc).to.be.calledWith(input);
+      expect(mockMyClass.propertyFunc).toHaveBeenCalledWith(input);
     });
 
     it("should override class property", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
         property: propertyValue
       });
-      expect(mockMyClass.property).to.eq(propertyValue);
+      expect(mockMyClass.property).toEqual(propertyValue);
     });
 
     it("should override class getter", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
         getter: propertyValue
       });
-      expect(mockMyClass.getter).to.eq(propertyValue);
+      expect(mockMyClass.getter).toEqual(propertyValue);
     });
 
     it("should stub class setter", () => {
@@ -360,37 +369,36 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
         property: propertyValue
       });
       mockMyClass.setter = chance.integer();
-      expect(mockMyClass.property).to.eq(propertyValue);
+      expect(mockMyClass.property).toEqual(propertyValue);
     });
 
     it("should stub setter calls", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      expect((mockMyClass.setter = propertyValue)).not.to.throw;
+      expect((mockMyClass.setter = chance.integer())).not.toThrow;
     });
 
     it("should allow setting properties", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
       mockMyClass.property = propertyValue;
-      expect(mockMyClass.property).to.eq(propertyValue);
+      expect(mockMyClass.property).toEqual(propertyValue);
     });
 
     it("should allow setting optional properties", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      mockMyClass.property = propertyValue;
       mockMyClass.optionalProperty = propertyValue;
-      expect(mockMyClass.optionalProperty).to.eq(propertyValue);
+      expect(mockMyClass.optionalProperty).toEqual(propertyValue);
     });
 
     it("should stub class", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
       mockMyClass.func(input, "whatever");
-      expect(mockMyClass.func).to.be.calledWith(input, "whatever");
+      expect(mockMyClass.func).toHaveBeenCalledWith(input, "whatever");
     });
 
     it("should stub class function return value", () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-      mockMyClass.func.returns(returnValue);
-      expect(mockMyClass.func(input, "whatever")).to.eq(returnValue);
+      mockMyClass.func.mockReturnValue(returnValue);
+      expect(mockMyClass.func(input, "whatever")).toEqual(returnValue);
     });
   });
 });

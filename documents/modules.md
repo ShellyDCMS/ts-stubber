@@ -1,6 +1,6 @@
-[@shellygo/ts-stubber - v1.0.0](README.md) / Exports
+[ts-stubber - v1.0.1](README.md) / Exports
 
-# @shellygo/ts-stubber - v1.0.0
+# ts-stubber - v1.0.1
 
 ## Table of contents
 
@@ -108,12 +108,15 @@ class MyClass {
    }
 }
 
-const stubbedInstanceCreator = StubbedInstanceCreator<
-     MyClass,
-     SinonStub
-   >(() => sinon.stub())
+ const sinonStubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
+   () => sinon.stub()
+ );
 
-const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
-      sinon.stub()
-    ).createStubbedInstance()
+ const sinonMockMyClass = sinonStubbedInstanceCreator.createStubbedInstance();
+
+ const jestStubbedInstanceCreator = StubbedInstanceCreator<MyClass, jest.Mock>(
+   () => jest.fn()
+ );
+
+ const jestMockMyClass = jestStubbedInstanceCreator.createStubbedInstance();
 ```
