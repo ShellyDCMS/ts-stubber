@@ -40,11 +40,11 @@ const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
 ).createStubbedInstance();
 ```
 
-`npm i -D @shellygo/ts-stubber`
+`npm i -D @ts-stubber`
 
 or
 
-`yarn add -D @shellygo/ts-stubber`
+`yarn add -D @ts-stubber`
 
 ## Developing
 
