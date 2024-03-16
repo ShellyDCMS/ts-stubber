@@ -332,74 +332,73 @@ describe("Jest stub builder tests with Jest Mocks", () => {
       expect(await mockMyClass.asynFunc(input)).toEqual(returnValue);
     });
 
-    // it("should stub async property function", async () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   await mockMyClass.asyncPropertyFunc(3);
-    //   expect(mockMyClass.asyncPropertyFunc).to.be.calledWith(3);
-    // });
+    it("should stub async property function", async () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      await mockMyClass.asyncPropertyFunc(input);
+      expect(mockMyClass.asyncPropertyFunc).toHaveBeenCalledWith(3);
+    });
 
-    // it("should override class property Function", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.propertyFunc.returns(7);
-    //   expect(mockMyClass.propertyFunc(3)).to.eq(7);
-    // });
+    it("should override class property Function", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.propertyFunc.mockReturnValue(returnValue);
+      expect(mockMyClass.propertyFunc(input)).toEqual(returnValue);
+    });
 
-    // it("should stub class property function", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.propertyFunc(3);
-    //   expect(mockMyClass.propertyFunc).to.be.calledWith(3);
-    // });
+    it("should stub class property function", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.propertyFunc(input);
+      expect(mockMyClass.propertyFunc).toHaveBeenCalledWith(input);
+    });
 
-    // it("should override class property", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
-    //     property: 5
-    //   });
-    //   expect(mockMyClass.property).to.eq(5);
-    // });
+    it("should override class property", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
+        property: propertyValue
+      });
+      expect(mockMyClass.property).toEqual(propertyValue);
+    });
 
-    // it("should override class getter", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
-    //     getter: 5
-    //   });
-    //   expect(mockMyClass.getter).to.eq(5);
-    // });
+    it("should override class getter", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
+        getter: propertyValue
+      });
+      expect(mockMyClass.getter).toEqual(propertyValue);
+    });
 
-    // it("should stub class setter", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
-    //     property: 8
-    //   });
-    //   mockMyClass.setter = 5;
-    //   expect(mockMyClass.property).to.eq(8);
-    // });
+    it("should stub class setter", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
+        property: propertyValue
+      });
+      mockMyClass.setter = chance.integer();
+      expect(mockMyClass.property).toEqual(propertyValue);
+    });
 
-    // it("should stub setter calls", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   expect((mockMyClass.setter = 5)).not.to.throw;
-    // });
+    it("should stub setter calls", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      expect((mockMyClass.setter = chance.integer())).not.toThrow;
+    });
 
-    // it("should allow setting properties", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.property = 5;
-    //   expect(mockMyClass.property).to.eq(5);
-    // });
+    it("should allow setting properties", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.property = propertyValue;
+      expect(mockMyClass.property).toEqual(propertyValue);
+    });
 
-    // it("should allow setting optional properties", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.property = 5;
-    //   mockMyClass.optionalProperty = 5;
-    //   expect(mockMyClass.optionalProperty).to.eq(5);
-    // });
+    it("should allow setting optional properties", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.optionalProperty = propertyValue;
+      expect(mockMyClass.optionalProperty).toEqual(propertyValue);
+    });
 
-    // it("should stub class", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.func(5, "whatever");
-    //   expect(mockMyClass.func).to.be.calledWith(5, "whatever");
-    // });
+    it("should stub class", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.func(input, "whatever");
+      expect(mockMyClass.func).toHaveBeenCalledWith(input, "whatever");
+    });
 
-    // it("should stub class function return value", () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.func.returns(7);
-    //   expect(mockMyClass.func(5, "whatever")).to.eq(7);
-    // });
+    it("should stub class function return value", () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.func.mockReturnValue(returnValue);
+      expect(mockMyClass.func(input, "whatever")).toEqual(returnValue);
+    });
   });
 });
