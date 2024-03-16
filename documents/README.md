@@ -1,4 +1,4 @@
-@shellygo/ts-stubber / [Exports](modules.md)
+ts-stubber / [Exports](modules.md)
 
 # ts-stubber
 
@@ -12,13 +12,45 @@ A generic stubbed instance creator to lazy stub any interface/class, without cal
 
 ## Usage
 
-This library provides an API to create a stubbed instance of a class or interface, including property functions, allowing overrides and excluded methods
+This library provides an API to create a stubbed instance of a class or interface, including property functions, allowing overrides and excluded methods.
 
-`npm i -D @shellygo/ts-stubber`
+```ts
+class MyClass {
+  constructor(input: number) {
+    throw new Error("Should not be called");
+  }
+  func(input: number, text: string) {
+    console.log(text);
+    return input;
+  }
+  property: number = 3;
+  optionalProperty?: number;
+  get getter(): number {
+    return this.property;
+  }
+  set setter(value: number) {
+    throw new Error("Should not be called");
+  }
+}
+
+const sinonStubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
+  () => sinon.stub()
+);
+
+const sinonMockMyClass = sinonStubbedInstanceCreator.createStubbedInstance();
+
+const jestStubbedInstanceCreator = StubbedInstanceCreator<MyClass, jest.Mock>(
+  () => jest.fn()
+);
+
+const jestMockMyClass = jestStubbedInstanceCreator.createStubbedInstance();
+```
+
+`npm i -D @ts-stubber`
 
 or
 
-`yarn add -D @shellygo/ts-stubber`
+`yarn add -D @ts-stubber`
 
 ## Developing
 
