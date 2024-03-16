@@ -335,7 +335,7 @@ describe("Jest stub builder tests with Jest Mocks", () => {
     it("should stub async property function", async () => {
       const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
       await mockMyClass.asyncPropertyFunc(input);
-      expect(mockMyClass.asyncPropertyFunc).toHaveBeenCalledWith(3);
+      expect(mockMyClass.asyncPropertyFunc).toHaveBeenCalledWith(input);
     });
 
     it("should override class property Function", () => {
