@@ -20,6 +20,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npx yarn install --frozen-lockfile
       - run: npm run build
+      - run: npm run test
       - run: npm run cy:run
       - run: npm run generate-md-docs
       - name: Generate html docs

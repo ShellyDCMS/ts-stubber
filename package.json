@@ -27,6 +27,7 @@
     "build": "rollup --configPlugin @rollup/plugin-typescript --config rollup.config.ts ",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
+    "test": "jest",
     "generate-md-docs": "typedoc --includeVersion --plugin typedoc-plugin-markdown --plugin typedoc-plugin-merge-modules --options typedoc.md.json",
     "generate-docs": "typedoc --includeVersion --plugin typedoc-plugin-merge-modules --options typedoc.html.json",
     "deploy": "gh-pages -d docs"

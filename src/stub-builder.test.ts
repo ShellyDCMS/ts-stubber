@@ -294,35 +294,35 @@ describe("Jest stub builder tests with Jest Mocks", () => {
       () => jest.fn()
     );
 
-    // it("should assert stub async function calls", async () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.asynFunc.returns(Promise.resolve(7));
-    //   await mockMyClass.asynFunc(3);
-    //   expect(mockMyClass.asynFunc).to.be.calledWith(3);
-    // });
+    it("should assert stub async function calls", async () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.asynFunc.mockResolvedValue(returnValue);
+      await mockMyClass.asynFunc(input);
+      expect(mockMyClass.asynFunc).toHaveBeenCalledWith(input);
+    });
 
-    // it("should assert stub async function calls using overrides", async () => {
-    //   const stub = sinon.stub().returns(Promise.resolve(7));
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
-    //     asynFunc: stub
-    //   });
-    //   await mockMyClass.asynFunc(3);
-    //   expect(mockMyClass.asynFunc).to.be.calledWith(3);
-    // });
+    it("should assert stub async function calls using overrides", async () => {
+      const stub = jest.fn().mockResolvedValue(returnValue);
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
+        asynFunc: stub
+      });
+      await mockMyClass.asynFunc(input);
+      expect(mockMyClass.asynFunc).toHaveBeenCalledWith(input);
+    });
 
-    // it("should stub async function", async () => {
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
-    //   mockMyClass.asynFunc.returns(Promise.resolve(7));
-    //   expect(await mockMyClass.asynFunc(3)).to.eq(7);
-    // });
+    it("should stub async function", async () => {
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+      mockMyClass.asynFunc.mockResolvedValue(returnValue);
+      expect(await mockMyClass.asynFunc(input)).toEqual(returnValue);
+    });
 
-    // it("should stub async function using overrides", async () => {
-    //   const stub = sinon.stub().returns(Promise.resolve(7));
-    //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
-    //     asynFunc: stub
-    //   });
-    //   expect(await mockMyClass.asynFunc(3)).to.eq(7);
-    // });
+    it("should stub async function using overrides", async () => {
+      const stub = jest.fn().mockResolvedValue(returnValue);
+      const mockMyClass = stubbedInstanceCreator.createStubbedInstance({
+        asynFunc: stub
+      });
+      expect(await mockMyClass.asynFunc(input)).toEqual(returnValue);
+    });
 
     // it("should stub async property function", async () => {
     //   const mockMyClass = stubbedInstanceCreator.createStubbedInstance();

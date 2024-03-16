@@ -31,13 +31,17 @@ class MyClass {
   }
 }
 
-const stubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(() =>
-  sinon.stub()
+const sinonStubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
+  () => sinon.stub()
 );
 
-const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
-  sinon.stub()
-).createStubbedInstance();
+const sinonMockMyClass = sinonStubbedInstanceCreator.createStubbedInstance();
+
+const jestStubbedInstanceCreator = StubbedInstanceCreator<MyClass, jest.Mock>(
+  () => jest.fn()
+);
+
+const jestMockMyClass = jestStubbedInstanceCreator.createStubbedInstance();
 ```
 
 `npm i -D @ts-stubber`
