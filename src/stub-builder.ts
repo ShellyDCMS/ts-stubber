@@ -11,24 +11,9 @@ export type StubbedMember<T, StubT> = T extends (
   ? StubT
   : T;
 
-export const defaultExcludedMethods: string[] = [
-  "__defineGetter__",
-  "__defineSetter__",
-  "hasOwnProperty",
-  "__lookupGetter__",
-  "__lookupSetter__",
-  "propertyIsEnumerable",
-  "toString",
-  "valueOf",
-  "__proto__",
-  "toLocaleString",
-  "isPrototypeOf",
-  "then"
-];
 /**
  *
  * @param createStub - method for stub creation, for example: sinon.stub()
- * @param excludedMethods - methods to exclude from mocking. default is defaultExcludedMethods
  * @returns a stub creator object with a single method: createStubbedInstance
  *
  * @example
@@ -62,8 +47,7 @@ export const defaultExcludedMethods: string[] = [
  * ```
  */
 export const StubbedInstanceCreator = <T, StubT>(
-  createStub: (prop: string) => StubT,
-  excludedMethods = defaultExcludedMethods
+  createStub: (prop: string) => StubT
 ): {
   createStubbedInstance: (
     overrides?: Partial<T>
@@ -79,9 +63,8 @@ export const StubbedInstanceCreator = <T, StubT>(
       target: Record<string, unknown>,
       prop: string
     ) => {
-      if (!target[prop] && !excludedMethods.includes(prop)) {
-        const stub = createStub(prop);
-        target[prop] = stub;
+      if (!target[prop]) {
+        target[prop] = createStub(prop);
       }
     };
 
@@ -99,4 +82,32 @@ export const StubbedInstanceCreator = <T, StubT>(
     return builder as StubbedInstance<T, StubT> & T;
   };
   return { createStubbedInstance };
+};
+
+const defaultExcludedMethods: (string | RegExp)[] = [
+  "__defineGetter__",
+  "__defineSetter__",
+  "hasOwnProperty",
+  "__lookupGetter__",
+  "__lookupSetter__",
+  "propertyIsEnumerable",
+  "toString",
+  "valueOf",
+  "__proto__",
+  "toLocaleString",
+  "isPrototypeOf",
+  "then",
+  /^_\$lit\S+\$$/
+];
+
+const shouldExcludeFunction = (
+  prop: string,
+  excludedMethods: (string | RegExp)[]
+) => {
+  const matches = excludedMethods.filter((excludedMethod: string | RegExp) =>
+    typeof excludedMethod === "string"
+      ? excludedMethod === prop
+      : excludedMethod.test(prop)
+  );
+  return matches.length;
 };
