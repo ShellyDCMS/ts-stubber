@@ -1,6 +1,6 @@
-[ts-stubber - v1.0.1](README.md) / Exports
+[ts-stubber - v1.0.2](README.md) / Exports
 
-# ts-stubber - v1.0.1
+# ts-stubber - v1.0.2
 
 ## Table of contents
 
@@ -8,10 +8,6 @@
 
 - [StubbedInstance](modules.md#stubbedinstance)
 - [StubbedMember](modules.md#stubbedmember)
-
-### Variables
-
-- [defaultExcludedMethods](modules.md#defaultexcludedmethods)
 
 ### Functions
 
@@ -45,17 +41,11 @@ Replaces a type with a stub if it's a function.
 | `T` |
 | `StubT` |
 
-## Variables
-
-### defaultExcludedMethods
-
-• `Const` **defaultExcludedMethods**: `string`[]
-
 ## Functions
 
 ### StubbedInstanceCreator
 
-▸ **StubbedInstanceCreator**\<`T`, `StubT`\>(`createStub`, `excludedMethods?`): `Object`
+▸ **StubbedInstanceCreator**\<`T`, `StubT`\>(`createStub`): `Object`
 
 #### Type parameters
 
@@ -66,10 +56,9 @@ Replaces a type with a stub if it's a function.
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `createStub` | (`prop`: `string`) => `StubT` | `undefined` | method for stub creation, for example: sinon.stub() |
-| `excludedMethods` | `string`[] | `defaultExcludedMethods` | methods to exclude from mocking. default is defaultExcludedMethods |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `createStub` | (`prop`: `string`) => `StubT` | method for stub creation, for example: sinon.stub() |
 
 #### Returns
 

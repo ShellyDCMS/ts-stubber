@@ -143,13 +143,14 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
       }
     }
 
-    class MyInheritedClass extends MyClass {
-      constructor() {
-        super(5);
-        throw new Error("Should not be called");
-      }
-    }
     describe("Given inherited class", () => {
+      class MyInheritedClass extends MyClass {
+        constructor() {
+          super(5);
+          throw new Error("Should not be called");
+        }
+      }
+
       const stubbedInstanceCreator = StubbedInstanceCreator<
         MyInheritedClass,
         SinonStub
