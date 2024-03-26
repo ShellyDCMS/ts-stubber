@@ -59,21 +59,32 @@ const jestMockMyClass = jestStubbedInstanceCreator.createStubbedInstance();
 
 ## Caveats, Known Issues, and Limitations
 
-Some of JS built-in function such as `hasOwnProperty` will act differently when applied on the mocked Class.
+Due to the lazy nature of the stubbing, for properties to exist in the stub, they must be overridden or set with a value.
 
 ```ts
 class MyClass {
   property: number = 3;
+  get getter(): number {
+    return this.property;
+  }
+  set setter(value: number) {
+    throw new Error("Should not be called");
+  }
 }
 
-it("should not override build in methods", () => {
+it("should have own property given property is overridden", () => {
+  const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+    jest.fn()
+  ).createStubbedInstance({ property: 5 }); // this test will fail if property is not overridden
+  expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
+});
+
+it("should have own property given property is set", () => {
   const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
     jest.fn()
   ).createStubbedInstance();
-  const myClass = new MyClass(5);
-  expect(myClass.hasOwnProperty("property")).toBe(true);
-  // NOTE! mockMyClass does not have a property called "property"
-  expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(false);
+  mockMyClass.property = 8; // this test will fail if property is not set
+  expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
 });
 ```
 

@@ -1,6 +1,6 @@
-[ts-stubber - v1.0.2](README.md) / Exports
+[ts-stubber - v1.0.3](README.md) / Exports
 
-# ts-stubber - v1.0.2
+# ts-stubber - v1.0.3
 
 ## Table of contents
 
