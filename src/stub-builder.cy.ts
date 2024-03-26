@@ -278,7 +278,7 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
       const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
         sinon.stub()
       ).createStubbedInstance({ property: 5 }); // this test will fail if property is not overridden
-      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe.eq(true);
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).to.eq(true);
     });
 
     it("should have own property given property is set", () => {
@@ -286,7 +286,7 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
         sinon.stub()
       ).createStubbedInstance();
       mockMyClass.property = 8; // this test will fail if property is not set
-      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe.eq(true);
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).to.eq(true);
     });
 
     it("should stub class function", () => {
