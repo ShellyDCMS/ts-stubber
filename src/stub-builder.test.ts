@@ -232,7 +232,7 @@ describe("Jest stub builder tests with Jest Mocks", () => {
         expect(mockMyInheritedClass.getter).toEqual(propertyValue);
       });
 
-      it("should stub class setter with override", () => {
+      it("should stub class property with override", () => {
         const mockMyInheritedClass =
           stubbedInstanceCreator.createStubbedInstance({
             property: propertyValue
@@ -281,6 +281,34 @@ describe("Jest stub builder tests with Jest Mocks", () => {
           returnValue
         );
       });
+    });
+
+    it("should have own property given property is overridden", () => {
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
+      ).createStubbedInstance({ property: 5 }); // this test will fail if property is not overridden
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
+    });
+
+    it("should have own property given property is set", () => {
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
+      ).createStubbedInstance();
+      mockMyClass.property = 8; // this test will fail if property is not set
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
+    });
+
+    it("should override properties given overridden", () => {
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
+      ).createStubbedInstance({ property: 5 }); // this test will fail if property is not overridden
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
+    });
+    it("given overriding property, should have own property", () => {
+      const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
+        jest.fn()
+      ).createStubbedInstance({ property: 5 });
+      expect((<MyClass>mockMyClass).hasOwnProperty("property")).toBe(true);
     });
 
     it("should stub class function", () => {
