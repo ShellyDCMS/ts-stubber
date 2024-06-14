@@ -7,7 +7,7 @@
   },
   "objectLiteralTypeDeclarationStyle": "list",
   "entryPoints": ["./src/index.ts"],
-  "out": "documents",
+  "out": "docs",
   "disableSources": true,
   "githubPages": false
 }
