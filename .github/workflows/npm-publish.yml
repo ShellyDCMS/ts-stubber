@@ -32,7 +32,7 @@ jobs:
         with:
           dir: site
           branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN  }}
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
