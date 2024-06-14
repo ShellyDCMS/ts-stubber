@@ -7,9 +7,7 @@ ts-stubber / [Exports](modules.md)
 A generic stubbed instance creator to lazy stub any interface/class, while completely avoiding calling class's constructor.
 Thus, enabling both avoiding side effects that may occur while class constructor is activated and mocking Classes with no default constructor.
 
-## [Markdown Documentation](https://github.com/ShellyDCMS/ts-stubber/blob/main/documents/modules.md)
-
-## [HTML Documentation](https://shellydcms.github.io/ts-stubber/modules.html)
+## [Documentation](https://shellydcms.github.io/ts-stubber/modules.html)
 
 ## Installation
 
