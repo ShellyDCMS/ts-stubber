@@ -458,7 +458,6 @@
 
 
 <p>ts-stubber / <a href="modules.html">Exports</a></p>
-<p>ts-stubber / <a href="modules.html">Exports</a></p>
 <h1 id="ts-stubber">ts-stubber</h1>
 <p><img alt="ts-stubber" src="https://github.com/ShellyDCMS/ts-stubber/actions/workflows/npm-publish.yml/badge.svg" /></p>
 <p>A generic stubbed instance creator to lazy stub any interface/class, while completely avoiding calling class's constructor.
@@ -487,18 +486,19 @@ Thus, enabling both avoiding side effects that may occur while class constructor
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;Should not be called&quot;</span><span class="p">);</span>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1">// creating a stubbed instance using sinon</span>
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="kd">const</span><span class="w"> </span><span class="nx">sinonStubbedInstanceCreator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StubbedInstanceCreator</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="p">,</span><span class="w"> </span><span class="nx">SinonStub</span><span class="o">&gt;</span><span class="p">(</span>
 </span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">sinon</span><span class="p">.</span><span class="nx">stub</span><span class="p">()</span>
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p">);</span>
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="kd">const</span><span class="w"> </span><span class="nx">sinonMockMyClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sinonStubbedInstanceCreator</span><span class="p">.</span><span class="nx">createStubbedInstance</span><span class="p">();</span>
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jestStubbedInstanceCreator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StubbedInstanceCreator</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="p">,</span><span class="w"> </span><span class="nx">jest</span><span class="p">.</span><span class="nx">Mock</span><span class="o">&gt;</span><span class="p">(</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="p">);</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jestMockMyClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jestStubbedInstanceCreator</span><span class="p">.</span><span class="nx">createStubbedInstance</span><span class="p">();</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1">// creating a stubbed instance using jest</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jestStubbedInstanceCreator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">StubbedInstanceCreator</span><span class="o">&lt;</span><span class="nx">MyClass</span><span class="p">,</span><span class="w"> </span><span class="nx">jest</span><span class="p">.</span><span class="nx">Mock</span><span class="o">&gt;</span><span class="p">(</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">);</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="kd">const</span><span class="w"> </span><span class="nx">jestMockMyClass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">jestStubbedInstanceCreator</span><span class="p">.</span><span class="nx">createStubbedInstance</span><span class="p">();</span>
 </span></code></pre></div>
 <h2 id="caveats-known-issues-and-limitations">Caveats, Known Issues, and Limitations</h2>
 <p>Due to the lazy nature of the stubbing, for properties to exist in the stub, they must be overridden or set with a value.</p>
