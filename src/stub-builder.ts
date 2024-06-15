@@ -86,31 +86,3 @@ export const StubbedInstanceCreator = <T, StubT>(
   };
   return { createStubbedInstance };
 };
-
-const defaultExcludedMethods: (string | RegExp)[] = [
-  "__defineGetter__",
-  "__defineSetter__",
-  "hasOwnProperty",
-  "__lookupGetter__",
-  "__lookupSetter__",
-  "propertyIsEnumerable",
-  "toString",
-  "valueOf",
-  "__proto__",
-  "toLocaleString",
-  "isPrototypeOf",
-  "then",
-  /^_\$lit\S+\$$/
-];
-
-const shouldExcludeFunction = (
-  prop: string,
-  excludedMethods: (string | RegExp)[]
-) => {
-  const matches = excludedMethods.filter((excludedMethod: string | RegExp) =>
-    typeof excludedMethod === "string"
-      ? excludedMethod === prop
-      : excludedMethod.test(prop)
-  );
-  return matches.length;
-};

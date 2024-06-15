@@ -1,5 +1,3 @@
-ts-stubber / [Exports](modules.md)
-
 # ts-stubber
 
 ![ts-stubber](https://github.com/ShellyDCMS/ts-stubber/actions/workflows/npm-publish.yml/badge.svg)
@@ -39,13 +37,14 @@ class MyClass {
     throw new Error("Should not be called");
   }
 }
-
+// creating a stubbed instance using sinon
 const sinonStubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
   () => sinon.stub()
 );
 
 const sinonMockMyClass = sinonStubbedInstanceCreator.createStubbedInstance();
 
+// creating a stubbed instance using jest
 const jestStubbedInstanceCreator = StubbedInstanceCreator<MyClass, jest.Mock>(
   () => jest.fn()
 );
