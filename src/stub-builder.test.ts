@@ -291,6 +291,7 @@ describe("Jest stub builder tests with Jest Mocks", () => {
     });
 
     it("should have own property given property is set", () => {
+      // creating a stubbed instance using jest
       const mockMyClass = StubbedInstanceCreator<MyClass, jest.Mock>(() =>
         jest.fn()
       ).createStubbedInstance();
