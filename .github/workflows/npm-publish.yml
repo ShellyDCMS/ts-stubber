@@ -27,14 +27,15 @@ jobs:
         run: |
           npm run generate-md-docs          
           docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
+      - name: Update Coverage Badge
+        uses: we-cli/coverage-badge-action@main
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
         with:
           dir: site
           branch: gh-pages
           token: ${{ secrets.ACCESS_TOKEN }}
-      - name: Update Coverage Badge
-        uses: we-cli/coverage-badge-action@main
+
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
