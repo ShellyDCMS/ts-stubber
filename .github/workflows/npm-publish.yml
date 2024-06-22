@@ -33,6 +33,8 @@ jobs:
           dir: site
           branch: gh-pages
           token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Update Coverage Badge
+        uses: we-cli/coverage-badge-action@main
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
