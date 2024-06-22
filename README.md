@@ -1,7 +1,7 @@
 # ts-stubber
 
 ![ts-stubber](https://github.com/ShellyDCMS/ts-stubber/actions/workflows/npm-publish.yml/badge.svg)
-![Branches](./badges/coverage-branches.svg)
+![Branches](./badges/coverage-branches.svg?branch=badges)
 ![Functions](./badges/coverage-functions.svg)
 ![Lines](./badges/coverage-lines.svg)
 ![Statements](./badges/coverage-statements.svg)
