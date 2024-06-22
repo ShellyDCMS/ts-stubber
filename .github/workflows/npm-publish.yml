@@ -23,21 +23,28 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run cy:run
-      - name: ⚙️ Generating coverage badges
-        uses: jpb06/coverage-badges-action@latest
-        with:
-          branches: main
-          badges-icon: jest
-      - name: Build the Docs
-        run: |
-          npm run generate-md-docs          
-          docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
         with:
           dir: site
           branch: gh-pages
           token: ${{ secrets.ACCESS_TOKEN }}
+      - name: 🔴 Delete remote badges branch
+        run: git push origin --delete badges
+      - name: ➕ Create badges branch
+        run: git checkout -b badges
+      - name: ⚙️ Generating coverage badges
+        uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: "*"
+          badges-icon: jest
+          target-branch: badges
+      - name: ⬆️ Push badges branch
+        run: git push origin badges
+      - name: Build the Docs
+        run: |
+          npm run generate-md-docs          
+          docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
