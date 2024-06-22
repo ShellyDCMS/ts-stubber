@@ -23,12 +23,15 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run cy:run
+      - name: ⚙️ Generating coverage badges
+        uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: main
+          badges-icon: jest
       - name: Build the Docs
         run: |
           npm run generate-md-docs          
           docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
-      - name: Update Coverage Badge
-        uses: we-cli/coverage-badge-action@main
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
         with:
