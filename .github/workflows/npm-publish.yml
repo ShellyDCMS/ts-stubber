@@ -23,8 +23,6 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run cy:run
-      - name: Update Coverage Badge
-        uses: we-cli/coverage-badge-action@main
       - name: Build the Docs
         run: |
           npm run generate-md-docs          
