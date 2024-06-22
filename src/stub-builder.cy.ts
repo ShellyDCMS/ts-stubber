@@ -290,6 +290,7 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
     });
 
     it("should stub class function", () => {
+      // creating a stubbed instance using sinon
       const mockMyClass = StubbedInstanceCreator<MyClass, SinonStub>(() =>
         sinon.stub()
       ).createStubbedInstance();
