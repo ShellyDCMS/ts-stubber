@@ -1,8 +1,11 @@
 # ts-stubber
 
 ![ts-stubber](https://github.com/ShellyDCMS/ts-stubber/actions/workflows/npm-publish.yml/badge.svg)
-[![cov](https://ShellyDCMS.github.io/ts-stubber/badges/coverage.svg)](https://github.com/ShellyDCMS/ts-stubber/actions)
-
+![Branches](./badges/coverage-branches.svg)
+![Functions](./badges/coverage-functions.svg)
+![Lines](./badges/coverage-lines.svg)
+![Statements](./badges/coverage-statements.svg)
+![Coverage total](./badges/coverage-total.svg)
 A generic stubbed instance creator to lazy stub any interface/class, while completely avoiding calling class's constructor.
 Thus, enabling both avoiding side effects that may occur while class constructor is activated and mocking Classes with no default constructor.
 
