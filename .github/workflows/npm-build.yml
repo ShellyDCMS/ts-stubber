@@ -24,6 +24,7 @@ jobs:
       - run: npm run build
       - run: npm run test
       - run: npm run cy:run
+      - run: npm run generate-md-docs
       - name: Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
