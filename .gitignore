@@ -19,3 +19,4 @@
 .idea
 **/build
 docs
+test-report.xml
