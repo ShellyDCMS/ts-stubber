@@ -43,6 +43,14 @@ class MyClass {
     throw new Error("Should not be called");
   }
 }
+
+// creating a stubbed instance using the native node:test module
+const const nodeStubbedInstanceCreator = StubbedInstanceCreator<MyClass, Mock<Function>>(
+  () => mock.fn()
+);
+
+const nodeMockMyClass = nodeStubbedInstanceCreator.createStubbedInstance();
+
 // creating a stubbed instance using sinon
 const sinonStubbedInstanceCreator = StubbedInstanceCreator<MyClass, SinonStub>(
   () => sinon.stub()
