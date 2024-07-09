@@ -28,14 +28,14 @@ jobs:
       - name: ✔️ Cypress Tests Report
         uses: phoenix-actions/test-reporting@v8
         id: test-report
-        if: always()
+        if: github.repository == 'ShellyDCMS/ts-stubber'
         with:
           name: Cypress Tests
           path: ${{ github.workspace }}/cypress/results/json/mochawesome.json
           reporter: mochawesome-json
       - name: ✅ Jest Test Results
         uses: dorny/test-reporter@v1
-        if: success() || failure() # run this step even if previous step failed
+        if: github.repository == 'ShellyDCMS/ts-stubber'
         with:
           name: JEST Tests # Name of the check run which will be created
           path: test-report.xml # Path to test results
