@@ -4,6 +4,7 @@
 ![NPM](https://img.shields.io/npm/v/ts-stubber)
 ![MIT](https://camo.githubusercontent.com/a4426cbe5c21edb002526331c7a8fbfa089e84a550567b02a0d829a98b136ad0/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d4d49542d79656c6c6f772e737667)
 ![typescript](https://camo.githubusercontent.com/017786f7ebc845ae38c14f3bc28dc6162e756f33ea8549fd4f9071c405edb5de/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2533432532462533452d547970655363726970742d2532333030373463312e737667)
+![Known Vulnerabilities](https://snyk.io/test/github/{ShellyDCMS}/{ts-stubber}/badge.svg)
 
 ![Branches](https://raw.githubusercontent.com/ShellyDCMS/ts-stubber/badges/badges/coverage-branches.svg)
 ![Functions](https://raw.githubusercontent.com/ShellyDCMS/ts-stubber/badges/badges/coverage-functions.svg)
