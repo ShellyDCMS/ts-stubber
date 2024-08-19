@@ -66,7 +66,7 @@ export const StubbedInstanceCreator = <T, StubT>(
       target: Record<string, unknown>,
       prop: string
     ) => {
-      if (!target[prop]) {
+      if (!(prop in target)) {
         target[prop] = createStub(prop);
       }
     };
