@@ -181,6 +181,30 @@ describe("Cypress stub builder tests with Sinon Stubs", () => {
         expect(await mockMyInheritedClass.asynFunc(input)).to.eq(returnValue);
       });
 
+      it("async function should return value according to param", async () => {
+        const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+        mockMyClass.asynFunc.withArgs(1).resolves(101);
+        expect(await mockMyClass.asynFunc(1)).to.eq(101);
+      });
+
+      it("property async should return value according to param", async () => {
+        const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+        mockMyClass.asyncPropertyFunc.withArgs(1).returns(Promise.resolve(101));
+        expect(await mockMyClass.asyncPropertyFunc(1)).to.eq(101);
+      });
+
+      it("func should return value according to param", () => {
+        const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+        mockMyClass.func.withArgs(0, "whatever").returns(99);
+        expect(mockMyClass.func(0, "whatever")).to.eq(99);
+      });
+
+      it("property func should return value according to param", () => {
+        const mockMyClass = stubbedInstanceCreator.createStubbedInstance();
+        mockMyClass.propertyFunc.withArgs(3).returns(55);
+        expect(mockMyClass.propertyFunc(3)).to.eq(55);
+      });
+
       it("should stub async function using overrides", async () => {
         const stub = sinon.stub().returns(Promise.resolve(returnValue));
         const mockMyInheritedClass =
